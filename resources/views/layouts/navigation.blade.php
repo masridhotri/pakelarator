@@ -22,7 +22,7 @@
 </li>
 
 <li class="nav-item">
-    <a class="nav-link {{request()->is('kategori*') ? 'active' : ''}}" href="/kategori">
+    <a class="nav-link {{route('pinjam')}}" href="/kategori">
         <span data-feather="alert-octagon" class="align-text-bottom"></span>
         Kategori
     </a>

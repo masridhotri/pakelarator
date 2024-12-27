@@ -21,7 +21,7 @@
                     <span data-feather="arrow-left"></span> Kembali
                 </a>
             </div>
-            <form method="POST" class="" action="{{route('bukustore')}}" enctype="multipart/form-data">
+            <form method="POST" class="" action="{{ route('bukustore') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="inputJudul" class="form-label">Judul</label>
@@ -49,13 +49,20 @@
 
                 <div class="mb-3">
                     <label for="exampleSelectrole">kategori</label>
-                    <select class="form-control" name="kategoris" id="exampleSelectrole">
-                        @foreach ($kategori as $kate)
-                            <option value="{{ $kate->id }}" {{ $kate->id == old('kategoris_id') ? 'selected' : '' }}>
-                                {{ $kate->nama }} <!-- Sesuaikan dengan nama kolom -->
-                            </option>
-                        @endforeach
-                    </select>
+                    <div class="d-flex">
+                        <select class="form-control" name="kategoris" id="exampleSelectrole">
+                            @foreach ($kategori as $kate)
+                                <option value="{{ $kate->id }}"
+                                    {{ $kate->id == old('kategoris_id') ? 'selected' : '' }}>
+                                    {{ $kate->nama }} <!-- Sesuaikan dengan nama kolom -->
+                                </option>
+                            @endforeach
+                        </select>
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#kategori">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </div>
                     @error('kategori')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -108,10 +115,41 @@
                         </div>
                     @enderror
                 </div>
-
-
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </form>
         </div>
     </div>
+
+    {{-- modal for categories --}}
+    <div class="modal fade" id="kategori" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">tambah kategori baru</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="{{route('adkate')}}" method="post">
+                @csrf
+                <div class="mb-3">
+                    <label for="inputPenulis" class="form-label">nama kategori</label>
+                    <input type="text" name="nama" value="{{ old('nama') }}"
+                        class="form-control @error('nama') is-invalid @enderror" id="inputpenulis"
+                        aria-describedby="penulisHelp">
+                    @error('nama')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </form>
+            </div>
+            {{-- <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              
+            </div> --}}
+          </div>
+        </div>
+      </div>
 @endsection

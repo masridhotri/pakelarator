@@ -19,7 +19,7 @@ class bukuController extends Controller
     public function index()
     {
         $buku = buku::query();
-      
+
 
 
         $sort = request('sort_val') ?? 'DESC';
@@ -32,7 +32,7 @@ class bukuController extends Controller
             $buku->where(function ($q) {
                 $q->where('judul', 'LIKE', '%' . request('cari') . '%')
                     ->orWhere('penulis', 'LIKE', '%' . request('cari') . '%')
-                    ->orWhere('kategoris_id', 'LIKE', '%' . request('cari') . '%')
+                    ->orWhere('kategori_id', 'LIKE', '%' . request('cari') . '%')
                     ->orWhere('penerbit', 'LIKE', '%' . request('cari') . '%')
                     ->orWhere('foto', 'LIKE', '%' . request('cari') . '%')
                     ->orWhere('stok', 'LIKE', '%' . request('cari') . '%')
@@ -62,6 +62,18 @@ class bukuController extends Controller
         return view('pages.buku.add', compact('kategori'));
     }
 
+
+    public function katestore(Request $request)
+    {
+        $kate = new kategori();
+        $kate->nama = $request->nama;
+
+        $kate->save();
+        
+        return redirect()->route('addbuku');
+
+    }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -91,7 +103,7 @@ class bukuController extends Controller
         }
 
         $buku->save();
-       
+
         return redirect('buku')->with('success', 'Success create data');
     }
 
@@ -114,12 +126,12 @@ class bukuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(buku $buku)
+    public function edit($id)
     {
-        return view('pages.buku.edit', [
-            'data' => $buku,
+        $data = buku::find($id);
+        $kategori = kategori::all();
 
-        ]);
+        return view('pages.buku.edit', compact('data', 'kategori'));
     }
 
     /**
@@ -129,39 +141,52 @@ class bukuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, buku $buku)
+    public function update(Request $request, $id)
     {
-        $rules = [
-            'judul' => 'required',
-            'penulis' => 'required',
-            'kategori' => 'required',
-            'penerbit' => 'required',
-            'foto' => 'required',
-            'stok' => 'required',
-            'deskripsi' => 'required'
-        ];
+        // $rules = [
+        //     'judul' => 'required',
+        //     'penulis' => 'required',
+        //     'kategori' => 'required',
+        //     'penerbit' => 'required',
+        //     'foto' => 'required',
+        //     'stok' => 'required',
+        //     'deskripsi' => 'required'
+        // ];
 
-        $messages = [
-            'judul.required' => 'Judul Wajib terisi!',
-            'penulis.required' => 'Penulis Wajib terisi!',
-            'kategori.required' => 'Kategori Wajib terisi!',
-            'penerbit.required' => 'Penerbit Wajib terisi!',
-            'foto.required' => 'Foto Wajib terisi!',
-            'stok.required' => 'Stok Wajib terisi!',
-            'deskripsi.required' => 'Deskripsi Wajib terisi!'
-        ];
+        // $messages = [
+        //     'judul.required' => 'Judul Wajib terisi!',
+
+        //     'penulis.required' => 'Penulis Wajib terisi!',
+        //     'kategori.required' => 'Kategori Wajib terisi!',
+        //     'penerbit.required' => 'Penerbit Wajib terisi!',
+        //     'foto.required' => 'Foto Wajib terisi!',
+        //     'stok.required' => 'Stok Wajib terisi!',
+        //     'deskripsi.required' => 'Deskripsi Wajib terisi!'
+        // ];
+
+        // $request->validate($rules, $messages);
+        $data =  buku::find($id);
+        $data->judul = $request->judul;
+        $data->penulis = $request->penulis;
+        $data->penerbit = $request->penerbit;
+        $data->kategori_id = $request->kategoris;
+        // $buku->harga = $request->harga;
+        $data->stok = $request->stok;
+        $data->deskripsi = $request->deskripsi;
 
 
-        $request->validate($rules, $messages);
-        $datarow = $request->all();
+        if ($request->hasfile('foto')) {
+            $file = $request->file('foto');
+            $file_name = time() . $file->getClientOriginalName();
 
+            $file->move(public_path('file'), $file_name);
+            $data->foto = $file_name;
+        }
 
+        $data->save();
 
-        $buku->update($datarow);
-
-        return redirect('buku')->with('success', 'Success update data');
+        return redirect('buku')->with('success', 'Success create data');
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -170,7 +195,7 @@ class bukuController extends Controller
      */
     public function destroy($id)
     {
-        $buku = buku::find($id);     
+        $buku = buku::find($id);
         $buku->delete();
         return redirect()->route('showbuku');
     }

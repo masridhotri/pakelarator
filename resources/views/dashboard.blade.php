@@ -84,7 +84,7 @@
 
 
 
-    @foreach ($data as $kate)
+    {{-- @foreach ($data as $kate)
         <button class="btn btn-light" id="kategor">
             <h1> {{ $kate->nama }} <i class="bi bi-arrow-right"></i></h1>
         </button>
@@ -104,7 +104,7 @@
                 </div>
             @endforeach
         </div>
-    @endforeach
+    @endforeach --}}
 @endsection
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"

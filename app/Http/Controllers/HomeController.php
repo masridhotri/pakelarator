@@ -27,7 +27,7 @@ class HomeController extends Controller
     //     $judul = $request->judul;
     //     $userName = $request->userName;
     
-    //     if (isset($cart[$id])) {
+    //     if (isset($cart[$id])) {ho
     //         $cart[$id]['quantity'] += 1;
     //     } else {
     //         $cart[$id] = [

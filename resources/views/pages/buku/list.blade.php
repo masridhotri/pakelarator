@@ -59,10 +59,10 @@
             </div>
             <div class="row ">
                 @foreach ($data as $buku)
-                    <div class="col">
+                    <div class="col mt-3">
                         <div class="card" id="kartu"
                             style="width: 20rem; height: 25rem; background-image: url('{{ asset('file/' . $buku->foto) }}'); ">
-                            {{-- <img src="{{ asset('file/' . $buku->foto) }}" class="card-img-top" alt="..."
+                            {{-- <img src="{{ asset('file/' . $buku->foto) }}" class="calerd-img-top" alt="..."
                                 style="height: 20rem;"> --}}
                             <div class="card-body" id="body">
                                 <div class="contbody">
@@ -72,7 +72,7 @@
                                         <a class="btn btn-warning btn-sm" href="/buku/{{ $buku->id }}">
                                             <span data-feather="eye"></span>
                                         </a>
-                                        <a class="btn btn-primary btn-sm" href="/buku/{{ $buku->id }}/edit">
+                                        <a class="btn btn-primary btn-sm" href="{{route('edit', $buku->id)}}">
                                             <span data-feather="edit"></span>
                                         </a>
                                         <a>

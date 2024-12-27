@@ -2,7 +2,7 @@
     width: 500px;
     height: 400px;
     display: flex;
-    align-items:flex-end;
+    align-items:center;
     overflow: hidden;
     background-size: cover;
     background-position: center;
@@ -13,7 +13,7 @@
     padding: 15px 25px;
     box-sizing: border-box;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background: rgba(0, 0, 0, 0.582);
     color: white;
@@ -25,22 +25,22 @@
     transform: translateY(0);
 }
 
-/* h3{
-    font-size: 30px;
-}
+    /* h3{
+        font-size: 30px;
+    }
 
-.icons{
-    width: 130px;
-    display: flex;
-    justify-content: space-evenly;
-}
+    .icons{
+        width: 130px;
+        display: flex;
+        justify-content: space-evenly;
+    }
 
-.icons i{
-    font-size: 30px;
-    color: rgba(255, 255, 255, 0.274);
-    transition: all 0.2s ease;
-}
+    .icons i{
+        font-size: 30px;
+        color: rgba(255, 255, 255, 0.274);
+        transition: all 0.2s ease;
+    }
 
-.icons i:hover{
-    color: rgba(255, 255, 255, 0.438);
-} */
+    .icons i:hover{
+        color: rgba(255, 255, 255, 0.438);
+    } */

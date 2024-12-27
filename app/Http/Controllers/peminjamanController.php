@@ -18,43 +18,43 @@ class peminjamanController extends Controller
     public function index()
     {
         $peminjaman = peminjaman::query();
-        
+
         $sort = request('sort_val') ?? 'DESC';
-        if(request('sort_name')=='user'){
-    $sort = $sort == 'DESC' ? 'ASC' : 'DESC';
-    $peminjaman->orderBy('user', request('sort_val'));
-}
+        if (request('sort_name') == 'user') {
+            $sort = $sort == 'DESC' ? 'ASC' : 'DESC';
+            $peminjaman->orderBy('user', request('sort_val'));
+        }
 
-if(request('sort_name')=='buku'){
-    $sort = $sort == 'DESC' ? 'ASC' : 'DESC';
-    $peminjaman->orderBy('buku', request('sort_val'));
-}
+        if (request('sort_name') == 'buku') {
+            $sort = $sort == 'DESC' ? 'ASC' : 'DESC';
+            $peminjaman->orderBy('buku', request('sort_val'));
+        }
 
-if(request('sort_name')=='tgl_pinjam'){
-    $sort = $sort == 'DESC' ? 'ASC' : 'DESC';
-    $peminjaman->orderBy('tgl_pinjam', request('sort_val'));
-}
+        if (request('sort_name') == 'tgl_pinjam') {
+            $sort = $sort == 'DESC' ? 'ASC' : 'DESC';
+            $peminjaman->orderBy('tgl_pinjam', request('sort_val'));
+        }
 
-if(request('sort_name')=='tgl_kembali'){
-    $sort = $sort == 'DESC' ? 'ASC' : 'DESC';
-    $peminjaman->orderBy('tgl_kembali', request('sort_val'));
-}
+        if (request('sort_name') == 'tgl_kembali') {
+            $sort = $sort == 'DESC' ? 'ASC' : 'DESC';
+            $peminjaman->orderBy('tgl_kembali', request('sort_val'));
+        }
 
-if(request('sort_name')=='denda'){
-    $sort = $sort == 'DESC' ? 'ASC' : 'DESC';
-    $peminjaman->orderBy('denda', request('sort_val'));
-}
+        if (request('sort_name') == 'denda') {
+            $sort = $sort == 'DESC' ? 'ASC' : 'DESC';
+            $peminjaman->orderBy('denda', request('sort_val'));
+        }
 
 
-        if(request('cari')){
-    $peminjaman->where(function($q){
-        $q->where('user','LIKE','%'.request('cari').'%')
-->orWhere('buku','LIKE','%'.request('cari').'%')
-->orWhere('tgl_pinjam','LIKE','%'.request('cari').'%')
-->orWhere('tgl_kembali','LIKE','%'.request('cari').'%')
-->orWhere('denda','LIKE','%'.request('cari').'%');
-    });
-}
+        if (request('cari')) {
+            $peminjaman->where(function ($q) {
+                $q->where('user', 'LIKE', '%' . request('cari') . '%')
+                    ->orWhere('buku', 'LIKE', '%' . request('cari') . '%')
+                    ->orWhere('tgl_pinjam', 'LIKE', '%' . request('cari') . '%')
+                    ->orWhere('tgl_kembali', 'LIKE', '%' . request('cari') . '%')
+                    ->orWhere('denda', 'LIKE', '%' . request('cari') . '%');
+            });
+        }
 
         $peminjaman = $peminjaman->orderBy('created_at', $sort)->paginate()->withQueryString();
 
@@ -71,7 +71,7 @@ if(request('sort_name')=='denda'){
      */
     public function create()
     {
-        return view('pages.peminjaman.add',[]);
+        return view('pages.peminjaman.add', []);
     }
 
     /**
@@ -82,27 +82,27 @@ if(request('sort_name')=='denda'){
      */
     public function store(Request $request)
     {
-        $rules =[
-    'user' => 'required',
-'buku' => 'required',
-'tgl_pinjam' => 'required',
-'tgl_kembali' => 'required',
-'denda' => 'required'
-];
+        $rules = [
+            'user' => 'required',
+            'buku' => 'required',
+            'tgl_pinjam' => 'required',
+            'tgl_kembali' => 'required',
+            'denda' => 'required'
+        ];
 
-$messages = [
-    'user.required' => 'nama peminjam Wajib terisi!',
-'buku.required' => 'judul buku Wajib terisi!',
-'tgl_pinjam.required' => 'tanggal pinjam Wajib terisi!',
-'tgl_kembali.required' => 'tanggal kembali Wajib terisi!',
-'denda.required' => 'denda Wajib terisi!'
-];
+        $messages = [
+            'user.required' => 'nama peminjam Wajib terisi!',
+            'buku.required' => 'judul buku Wajib terisi!',
+            'tgl_pinjam.required' => 'tanggal pinjam Wajib terisi!',
+            'tgl_kembali.required' => 'tanggal kembali Wajib terisi!',
+            'denda.required' => 'denda Wajib terisi!'
+        ];
 
 
         $request->validate($rules, $messages);
         $datarow = $request->all();
 
-        
+
 
         peminjaman::create($datarow);
 
@@ -132,7 +132,7 @@ $messages = [
     {
         return view('pages.peminjaman.edit', [
             'data' => $peminjaman,
-            
+
         ]);
     }
 
@@ -145,27 +145,27 @@ $messages = [
      */
     public function update(Request $request, peminjaman $peminjaman)
     {
-        $rules =[
-    'user' => 'required',
-'buku' => 'required',
-'tgl_pinjam' => 'required',
-'tgl_kembali' => 'required',
-'denda' => 'required'
-];
+        $rules = [
+            'user' => 'required',
+            'buku' => 'required',
+            'tgl_pinjam' => 'required',
+            'tgl_kembali' => 'required',
+            'denda' => 'required'
+        ];
 
-$messages = [
-    'user.required' => 'nama peminjam Wajib terisi!',
-'buku.required' => 'judul buku Wajib terisi!',
-'tgl_pinjam.required' => 'tanggal pinjam Wajib terisi!',
-'tgl_kembali.required' => 'tanggal kembali Wajib terisi!',
-'denda.required' => 'denda Wajib terisi!'
-];
+        $messages = [
+            'user.required' => 'nama peminjam Wajib terisi!',
+            'buku.required' => 'judul buku Wajib terisi!',
+            'tgl_pinjam.required' => 'tanggal pinjam Wajib terisi!',
+            'tgl_kembali.required' => 'tanggal kembali Wajib terisi!',
+            'denda.required' => 'denda Wajib terisi!'
+        ];
 
 
         $request->validate($rules, $messages);
         $datarow = $request->all();
 
-        
+
 
         $peminjaman->update($datarow);
 
@@ -180,7 +180,7 @@ $messages = [
      */
     public function destroy(peminjaman $peminjaman)
     {
-        
+
         $peminjaman->delete();
         return redirect('peminjaman')->with('success', 'Success delete data');
     }
@@ -190,10 +190,10 @@ $messages = [
         return Excel::download(new peminjamanExport, 'peminjamen.xlsx');
     }
 
-    public function import(Request $request)
-    {
-        Excel::import(new peminjamanImport, $request->file('file'), null, \Maatwebsite\Excel\Excel::XLSX);
+    // public function import(Request $request)
+    // {
+    //     Excel::import(new peminjamanImport, $request->file('file'), null, \Maatwebsite\Excel\Excel::XLSX);
 
-        return redirect('/peminjaman')->with('success', 'All good!');
-    }
+    //     return redirect('/peminjaman')->with('success', 'All good!');
+    // }
 }
