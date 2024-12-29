@@ -17,20 +17,21 @@
     <div class="row gap-5" style="margin-left:7rem;">
 
         <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header">user</div>
+            <div class="card-header">manusia</div>
             <div class="card-body">
-                <h5 class="card-title">jumlah user</h5>
+                <h5 class="card-title">peminjam</h5>
                 <h1>5000 </h1>
                 <p>100%</p>
             </div>
         </div>
 
+        
         <div class="card text-bg-secondary mb-3" style="max-width: 18rem;">
-            <div class="card-header">jumlah peminjam </div>
+            <div class="card-header">jumlah buku yang dipinjam </div>
             <div class="card-body">
-                <h5 class="card-title">jumlah user yang meminjam</h5>
-                <h1>1</h1>
-                <p>99%</p>
+                <h5 class="card-title">buku</h5>
+                <h1></h1>
+                <p></p>
             </div>
         </div>
 
@@ -38,8 +39,7 @@
             <div class="card-header">buku </div>
             <div class="card-body">
                 <h5 class="card-title">jumlah buku yang tersedia</h5>
-                <h1>400000</h1>
-                <p>60%</p>
+                <h1>{{$bukuter}}</h1>
             </div>
         </div>
     </div>

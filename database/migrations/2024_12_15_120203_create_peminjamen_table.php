@@ -15,11 +15,12 @@ class CreatePeminjamenTable extends Migration
     {
         Schema::create('peminjamen', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user')->constrained();
-            $table->foreignId('buku')->constrained();
+            $table->string('nama');
+            $table->string('alamat');
+            $table->foreignId('bukus_id')->constrained('bukus');
             $table->date('tgl_pinjam');
             $table->date('tgl_kembali');
-            $table->integer('denda');
+            $table->enum('status', ['dipinjam', 'dikembalikan'])->default('dipinjam');
 
             $table->timestamps();
         });
